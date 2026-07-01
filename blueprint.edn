@@ -1,0 +1,10 @@
+{:itonami.blueprint/id "cloud-itonami-isco-4110"
+ :itonami.blueprint/name "Independent Office Administration Practice"
+ :itonami.blueprint/isco-08 "4110"
+ :itonami.blueprint/domain :services/office-administration
+ :itonami.blueprint/license "AGPL-3.0-or-later"
+ :itonami.blueprint/social-impact [:local-jobs :small-business-support :record-keeping-quality]
+ :itonami.blueprint/governor :office-admin-governor
+ :itonami.blueprint/robotics true
+ :itonami.blueprint/required-technologies [:robotics :forms :audit-ledger :bpmn]
+ :itonami.blueprint/status :public-oss}

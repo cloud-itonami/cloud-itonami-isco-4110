@@ -1,0 +1,31 @@
+;; What this vertical's robot physically does, declared for
+;; kotoba.robotics.process (kotoba-lang/robotics). `kbb -M:physics` runs it.
+;;
+;; README "Robotics premise": a document-handling robot performs scanning,
+;; filing and mail-sorting tasks in the office (ISCO 4110). Its physical work
+;; is moving mail and files: lifting mail trays into the sorting frame, and
+;; running the mail cart around the floor.
+;;
+;; Every number without a cited source is marked `estimate` in its :basis.
+{:physics/schema "itonami.physical-ai.spec.v1"
+ :repo "cloud-itonami/cloud-itonami-isco-4110"
+ :cases
+ [{:id :mail-tray-to-sorting-frame
+   :kind :manipulator
+   :procedure "arm lifts a tray of incoming mail from the intake bench up into the pigeonhole sorting frame"
+   :params {:l1-m 0.45 :l2-m 0.40 :m1-kg 3.5 :m2-kg 2.5
+            :from [0.55 0.05] :to [0.35 0.60] :duration-s 2.5 :steps 500}
+   :sweep {:param :payload-kg :values [0.5 1.0 2.0 4.0 7.0]}
+   :quantity :peak-tau1-nm
+   :limit {:max 60.0 :basis "estimate: continuous shoulder torque of a light collaborative arm (~5 kg class)"}
+   :boundary {:lo 0.1 :hi 20.0}}
+  {:id :mail-cart-round
+   :kind :transport
+   :procedure "robot runs the mail cart from the mail room to a delivery point on the office floor"
+   :params {:mass-kg 50.0 :payload-kg 20.0 :v-max-mps 1.0 :a-max-mps2 0.5
+            :brake-decel-mps2 0.8 :drive-force-n 120.0 :crr 0.02
+            :cog-height-m 0.60 :support-half-length-m 0.30}
+   :sweep {:param :distance-m :values [30.0 60.0 120.0 200.0 300.0]}
+   :quantity :cycle-time-s
+   :limit {:max 240.0 :basis "estimate: one delivery leg inside a 4-minute slot so a floor round finishes within the morning mail window"}
+   :boundary {:lo 5.0 :hi 800.0}}]}
